@@ -1,16 +1,35 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const { width } = Dimensions.get('window');
 
-export default function Menu() {
+import ListaDolares from './ListaDolares';
+
+  const Stack = createNativeStackNavigator();
+  const { width } = Dimensions.get('window');
+
+  
+  export default function App() {
+    return (
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Menu" component={Menu} />
+          <Stack.Screen name="ListaDolares" component={ListaDolares} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    );
+  }
+
+
+function Menu({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Gestión de Dólares</Text>
       
       <View style={styles.menuGrid}>
         {/* Botón 1 */}
-        <TouchableOpacity style={styles.card} onPress={() => console.log('Cambio')}>
+        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('ListaDolares')}>
           <Text style={styles.icon}>💰</Text>
           <Text style={styles.cardText}>Tasa de Cambio</Text>
         </TouchableOpacity>
