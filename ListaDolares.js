@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet } from 'react-native';
 
 export default function ListaDolares() {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('https://api.exchangerate-api.com/v4/latest/USD')
@@ -11,29 +10,21 @@ export default function ListaDolares() {
       .then(json => {
         const lista = Object.entries(json.rates);
         setData(lista);
-        setLoading(false);
       })
-      .catch(err => {
-        console.log(err);
-        setLoading(false);
-      });
+      .catch(err => console.log(err));
   }, []);
-
-  if (loading) {
-    return <ActivityIndicator size="large" style={{ marginTop: 50 }} />;
-  }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tasas de Cambio</Text>
+      <Text style={styles.title}>Tasas del dólar</Text>
 
       <FlatList
         data={data}
         keyExtractor={(item) => item[0]}
         renderItem={({ item }) => (
           <View style={styles.item}>
-            <Text>{item[0]}</Text>
-            <Text>{item[1]}</Text>
+            <Text style={styles.moneda}>{item[0]}</Text>
+            <Text style={styles.valor}>{item[1]}</Text>
           </View>
         )}
       />
@@ -42,13 +33,28 @@ export default function ListaDolares() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: { fontSize: 22, fontWeight: 'bold', marginBottom: 20 },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#F0F2F5'
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 20
+  },
   item: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
     backgroundColor: '#fff',
-    marginBottom: 10
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  moneda: {
+    fontWeight: 'bold'
+  },
+  valor: {
+    color: '#333'
   }
 });

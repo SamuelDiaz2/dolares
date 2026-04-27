@@ -3,54 +3,61 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-nati
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-
 import ListaDolares from './ListaDolares';
+import TasaDolar from './TasaDolar';
 
-  const Stack = createNativeStackNavigator();
-  const { width } = Dimensions.get('window');
+const Stack = createNativeStackNavigator();
+const { width } = Dimensions.get('window');
 
-  
-  export default function App() {
-    return (
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Menu" component={Menu} />
-          <Stack.Screen name="ListaDolares" component={ListaDolares} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    );
-  }
-
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Menu" component={Menu} />
+        <Stack.Screen name="ListaDolares" component={ListaDolares} />
+        <Stack.Screen name="TasaDolar" component={TasaDolar} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 function Menu({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Gestión de Dólares</Text>
-      
+
       <View style={styles.menuGrid}>
-        {/* Botón 1 */}
-        <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('ListaDolares')}>
+
+        {/* Botón 1 (LISTA - NO TOCAR) */}
+        <TouchableOpacity 
+          style={styles.card} 
+          onPress={() => navigation.navigate('ListaDolares')}
+        >
           <Text style={styles.icon}>💰</Text>
           <Text style={styles.cardText}>Tasa de Cambio</Text>
         </TouchableOpacity>
 
         {/* Botón 2 */}
-        <TouchableOpacity style={styles.card} onPress={() => console.log('Historial')}>
+        <TouchableOpacity style={styles.card}>
           <Text style={styles.icon}>📊</Text>
           <Text style={styles.cardText}>Historial</Text>
         </TouchableOpacity>
 
-        {/* Botón 3 */}
-        <TouchableOpacity style={styles.card} onPress={() => console.log('Billetera')}>
+        {/* Botón 3 (TU API) */}
+        <TouchableOpacity 
+          style={styles.card}
+          onPress={() => navigation.navigate('TasaDolar')}
+        >
           <Text style={styles.icon}>💳</Text>
-          <Text style={styles.cardText}>Mi Billetera</Text>
+          <Text style={styles.cardText}>Ver dólar</Text>
         </TouchableOpacity>
 
         {/* Botón 4 */}
-        <TouchableOpacity style={styles.card} onPress={() => console.log('Ajustes')}>
+        <TouchableOpacity style={styles.card}>
           <Text style={styles.icon}>⚙️</Text>
           <Text style={styles.cardText}>Ajustes</Text>
         </TouchableOpacity>
+
       </View>
     </View>
   );
@@ -83,7 +90,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
-    // Sombra simple para iOS y Android
+
+    // sombras
     elevation: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
