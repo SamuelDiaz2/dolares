@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-nati
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import ListaDolares from './ListaDolares';
 import TasaDolar from './TasaDolar';
 
 const Stack = createNativeStackNavigator();
@@ -13,6 +14,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Menu" component={Menu} />
+        <Stack.Screen name="ListaDolares" component={ListaDolares} />
         <Stack.Screen name="TasaDolar" component={TasaDolar} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -26,8 +28,11 @@ function Menu({ navigation }) {
 
       <View style={styles.menuGrid}>
 
-        {/* Botón 1 (NO TOCAR) */}
-        <TouchableOpacity style={styles.card}>
+        {/* Botón 1 (LISTA - NO TOCAR) */}
+        <TouchableOpacity 
+          style={styles.card} 
+          onPress={() => navigation.navigate('ListaDolares')}
+        >
           <Text style={styles.icon}>💰</Text>
           <Text style={styles.cardText}>Tasa de Cambio</Text>
         </TouchableOpacity>
@@ -38,7 +43,7 @@ function Menu({ navigation }) {
           <Text style={styles.cardText}>Historial</Text>
         </TouchableOpacity>
 
-        {/* Botón 3 (AQUÍ ponemos la API) */}
+        {/* Botón 3 (TU API) */}
         <TouchableOpacity 
           style={styles.card}
           onPress={() => navigation.navigate('TasaDolar')}
@@ -68,6 +73,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 26,
     fontWeight: 'bold',
+    color: '#1A1A1A',
     marginBottom: 30,
     textAlign: 'center',
   },
@@ -84,7 +90,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
+
+    // sombras
     elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   icon: {
     fontSize: 40,
@@ -93,5 +105,6 @@ const styles = StyleSheet.create({
   cardText: {
     fontSize: 16,
     fontWeight: '600',
+    color: '#444',
   },
 });
